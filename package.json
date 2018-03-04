@@ -1,0 +1,35 @@
+{
+  "author": "阿卡琳",
+  "bugs": {
+    "url": "https://github.com/hufan-Akari/OdangoBot/issues"
+  },
+  "dependencies": {
+    "big-integer": "^1.6.26",
+    "node-fetch": "^1.7.3",
+    "node-telegram-bot-api": "^0.30.0",
+    "pg": "^6.4.2",
+    "request": "^2.83.0"
+  },
+  "description": "团子浮游炮",
+  "devDependencies": {},
+  "engines": {
+    "node": "8.1.x"
+  },
+  "homepage": "https://github.com/hufan-Akari/OdangoBot#readme",
+  "keywords": [
+    "Telegram",
+    "bot"
+  ],
+  "license": "GPL-3.0",
+  "main": "index.js",
+  "name": "odango_bot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hufan-Akari/OdangoBot.git"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}
