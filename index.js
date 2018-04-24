@@ -32,6 +32,7 @@ bot.setWebHook(`${url}/bot${TOKEN}`);
 const ownerID = process.env.ownerID || "your telegram ID";
 const LOGCHATID = process.env.LOGCHATID;
 const cool_down_time = 30;
+const DONATIONRECORDURL = process.env.DONATIONRECORDURL;
 
 const get_entities = ({ message, type }) => {
   if ("entities" in message) {
@@ -200,6 +201,8 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
 
   const { record } = await res.json();
 
+  const donation = await (await fetch(DONATIONRECORDURL)).text();
+
   if (record) {
     [
       "关于云音乐下载",
@@ -209,7 +212,10 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
       `会员过期时间: ${new Date(record.expireTime).toDateString()}`,
       "**请合理使用资源，比如说，只喂给我必须使用会员才能下载的歌曲**",
       "---",
-      `[捐助？点击这里赠送会员](http://music.163.com/store/vip?friendId=45441555&friendName=阿卡琳)`
+      `[捐助？点击这里赠送会员](http://music.163.com/store/vip?friendId=45441555&friendName=阿卡琳)`,
+      "---",
+      "捐助列表:",
+      donation
     ].map(i => help_markdown.push(i));
   }
 
@@ -295,7 +301,9 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
             ? file_url
             : jpeg_file_size < LIMIT
               ? jpeg_url
-              : sample_file_size < LIMIT ? sample_url : preview_url;
+              : sample_file_size < LIMIT
+                ? sample_url
+                : preview_url;
 
         if (url.startsWith("//")) {
           url = "http:" + url;
