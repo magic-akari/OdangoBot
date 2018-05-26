@@ -4,16 +4,16 @@
     "url": "https://github.com/hufan-Akari/OdangoBot/issues"
   },
   "dependencies": {
-    "big-integer": "^1.6.26",
-    "node-fetch": "^1.7.3",
+    "big-integer": "^1.6.28",
+    "node-fetch": "^2.1.2",
     "node-telegram-bot-api": "^0.30.0",
-    "pg": "^6.4.2",
-    "request": "^2.83.0"
+    "pg": "^7.4.3",
+    "request": "^2.87.0"
   },
   "description": "团子浮游炮",
   "devDependencies": {},
   "engines": {
-    "node": "8.1.x"
+    "node": ">=10.0.0"
   },
   "homepage": "https://github.com/hufan-Akari/OdangoBot#readme",
   "keywords": [
