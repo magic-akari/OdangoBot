@@ -247,6 +247,17 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
     return false;
   };
 
+  const ping = ({ chat_id, message, message_id, bot_commands }) => {
+    if (command_match({ bot_commands, command: "/ping" })) {
+      bot.sendMessage(chat_id, "pong~\n(´,,•ω•,,｀)♡", {
+        reply_to_message_id: message_id,
+        disable_notification: true,
+      });
+      return true;
+    }
+    return false;
+  };
+
   const konachan = ({ chat_id, message, message_id, bot_commands }) => {
     if (command_match({ bot_commands, command: "/konachan" })) {
       send_pic({
@@ -468,7 +479,7 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
     const { message_id, from, chat } = message;
     const chat_id = chat.id;
     const bot_commands = get_entities({ message, type: "bot_command" });
-    const task = [start, help, konachan, yandere, delete_sticker];
+    const task = [start, help, konachan, yandere, delete_sticker, ping];
     const admin_task = [reply, exec_SQL];
 
     let done = false;
