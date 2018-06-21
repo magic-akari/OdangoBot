@@ -531,41 +531,34 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
     const chat_id = chat.id;
 
     if (metadata.type === "text" && chat_id != LOGCHATID) {
-      bot.sendMessage(
-        LOGCHATID,
-        `user:@${message.from.username}${
-          "username" in chat ? "(@" + chat.username + ")" : ""
-        }\n${message.text}`,
-        {
-          disable_notification: true,
-          reply_markup: {
-            inline_keyboard: [
-              [
-                {
-                  text: "reply",
-                  switch_inline_query_current_chat: `/reply ${chat_id} ${message_id}\n`,
-                },
-                {
-                  text: "reply with sticker",
-                  callback_data: JSON.stringify([
-                    "reply_sticker",
-                    chat_id,
-                    message_id,
-                  ]),
-                },
-                {
-                  text: "forward",
-                  callback_data: JSON.stringify([
-                    "forward",
-                    chat_id,
-                    message_id,
-                  ]),
-                },
-              ],
+      bot.forwardMessage(LOGCHATID, chat_id, message_id, {
+        disable_notification: true,
+      });
+      bot.sendMessage(LOGCHATID, JSON.stringify(message), {
+        disable_notification: true,
+        reply_markup: {
+          inline_keyboard: [
+            [
+              {
+                text: "reply",
+                switch_inline_query_current_chat: `/reply ${chat_id} ${message_id}\n`,
+              },
+              {
+                text: "reply with sticker",
+                callback_data: JSON.stringify([
+                  "reply_sticker",
+                  chat_id,
+                  message_id,
+                ]),
+              },
+              {
+                text: "forward",
+                callback_data: JSON.stringify(["forward", chat_id, message_id]),
+              },
             ],
-          },
+          ],
         },
-      );
+      });
     }
   });
 
