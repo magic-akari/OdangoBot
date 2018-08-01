@@ -44,9 +44,9 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
-big-integer@^1.6.28:
-  version "1.6.31"
-  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.31.tgz#6d7852486e67c642502dcc03f7225a245c9fc7fa"
+big-integer@^1.6.33:
+  version "1.6.33"
+  resolved "https://registry.yarnpkg.com/big-integer/-/big-integer-1.6.33.tgz#6295b55e6010d2b2b4d234d32be93bfebddbba67"
 
 bl@^1.2.1:
   version "1.2.2"
