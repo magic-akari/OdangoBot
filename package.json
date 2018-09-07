@@ -4,7 +4,7 @@
     "url": "https://github.com/hufan-Akari/OdangoBot/issues"
   },
   "dependencies": {
-    "big-integer": "^1.6.35",
+    "big-integer": "^1.6.36",
     "node-fetch": "^2.2.0",
     "node-telegram-bot-api": "^0.30.0",
     "pg": "^7.4.3",
