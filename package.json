@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "big-integer": "^1.6.36",
-    "node-fetch": "^2.2.0",
+    "node-fetch": "^2.2.1",
     "node-telegram-bot-api": "^0.30.0",
     "pg": "^7.5.0",
     "request": "^2.88.0"
