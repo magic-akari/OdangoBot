@@ -74,7 +74,7 @@ const tryNtimes = async (fn, times = 5) =>
 const send_music = async ({ song_id, chat_id, message_id }) => {
   bot.sendChatAction(chat_id, "upload_audio");
 
-  let audio_metadata;
+  let audio_metadata = {};
 
   const queryRes = await pool.query(
     "SELECT file_id, duration, performer, title, album FROM music163 where id=$1",
