@@ -7,7 +7,7 @@
     "big-integer": "^1.6.36",
     "node-fetch": "^2.2.0",
     "node-telegram-bot-api": "^0.30.0",
-    "pg": "^7.5.0",
+    "pg": "^7.7.1",
     "request": "^2.88.0"
   },
   "description": "团子浮游炮",
