@@ -38,7 +38,7 @@ const get_entities = ({ message, type }) => {
   if ("entities" in message) {
     const { text, entities } = message;
     return entities
-      .filter(e => type === e.type)
+      .filter((e) => type === e.type)
       .map(({ offset, length }) => text.slice(offset, offset + length));
   }
   return [];
@@ -65,11 +65,11 @@ const help_markdown = [
   "---",
 ];
 
-const getRandomFromArray = array =>
+const getRandomFromArray = (array) =>
   array[Math.floor(Math.random() * array.length)];
 
 const tryNtimes = async (fn, times = 5) =>
-  await fn().catch(e => (times <= 1 ? fn() : tryNtimes(fn, times - 1)));
+  await fn().catch((e) => (times <= 1 ? fn() : tryNtimes(fn, times - 1)));
 
 const send_music = async ({ song_id, chat_id, message_id }) => {
   bot.sendChatAction(chat_id, "upload_audio");
@@ -90,7 +90,7 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
     do {
       const song_detail = await tryNtimes(async () =>
         (await fetchSongDetail(song_id)).json(),
-      ).catch(e => console.error(e));
+      ).catch((e) => console.error(e));
 
       if (song_detail === undefined || song_detail.songs.length === 0) {
         console.error("获取歌曲信息失败");
@@ -106,7 +106,7 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
       } = song_detail.songs[0];
 
       const duration = Math.floor(song_detail.songs[0].duration / 1000);
-      const performer = artists.map(a => a.name).join("/");
+      const performer = artists.map((a) => a.name).join("/");
 
       audio_metadata = {
         duration,
@@ -118,7 +118,7 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
       audio_metadata.song_link = await tryNtimes(
         async () => (await fetchSong(song_id)).json(),
         20,
-      ).catch(e => console.error(e));
+      ).catch((e) => console.error(e));
 
       if (audio_metadata.song_link === undefined) {
         console.error("获取歌曲链接失败");
@@ -203,24 +203,26 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
 
   const donation = await (await fetch(DONATIONRECORDURL)).text();
 
-  if (record) {
+  (() => {
     [
       "关于云音乐下载",
-      `为了确保合理使用，当前设置冷却时间为${cool_down_time}秒`,
+      `为了确保合理使用，当前设置冷却时间为 ${cool_down_time} 秒`,
       "团子使用了主人[@阿卡琳](http://music.163.com/user/home?id=45441555)的账号进行下载",
       "在会员期间，可以下载会员限定歌曲",
-      `会员过期时间: ${new Date(record.expireTime).toDateString()}`,
+      `会员过期时间: ${
+        record ? new Date(record.expireTime).toDateString() : "已过期"
+      }`,
       "---",
       `[捐助？点击这里赠送会员](http://music.163.com/store/vip?friendId=45441555&friendName=阿卡琳)`,
       "---",
       "捐助列表:",
       donation,
-    ].map(i => help_markdown.push(i));
-  }
+    ].map((i) => help_markdown.push(i));
+  })();
 
   const command_match = ({ bot_commands, command }) =>
     bot_commands.some(
-      bc => bc === command || bc === command + "@" + bot_username,
+      (bc) => bc === command || bc === command + "@" + bot_username,
     );
 
   const start = ({ chat_id, message, message_id, bot_commands }) => {
@@ -302,14 +304,14 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
     const json = await tryNtimes(
       async () => (await fetch(json_url)).json(),
       3,
-    ).catch(e => console.error(e));
+    ).catch((e) => console.error(e));
 
     if (json) {
       let safe_pic = json.filter(
-        p => !p.tags.includes("nipple") && !p.tags.includes("ass"),
+        (p) => !p.tags.includes("nipple") && !p.tags.includes("ass"),
       );
 
-      const media_list = safe_pic.slice(0, 10).map(pic => {
+      const media_list = safe_pic.slice(0, 10).map((pic) => {
         let {
           file_url,
           file_size,
@@ -324,10 +326,10 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
           file_size < LIMIT
             ? file_url
             : jpeg_file_size < LIMIT
-              ? jpeg_url
-              : sample_file_size < LIMIT
-                ? sample_url
-                : preview_url;
+            ? jpeg_url
+            : sample_file_size < LIMIT
+            ? sample_url
+            : preview_url;
 
         if (url.startsWith("//")) {
           url = "http:" + url;
@@ -379,7 +381,7 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
     }
   };
 
-  bot.on("sticker", async message => {
+  bot.on("sticker", async (message) => {
     if (
       message.chat.type === "private" ||
       (message.reply_to_message &&
@@ -416,10 +418,10 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
     }
   });
 
-  bot.on("new_chat_members", async message => {
+  bot.on("new_chat_members", async (message) => {
     const { message_id, from, chat, new_chat_members } = message;
     const chat_id = chat.id;
-    if (new_chat_members.some(m => m.id === bot_id)) {
+    if (new_chat_members.some((m) => m.id === bot_id)) {
       bot.sendMessage(chat_id, welcome, {
         reply_to_message_id: message_id,
         disable_notification: true,
@@ -475,7 +477,7 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
 
   const cool_down = new Map();
 
-  bot.on("text", message => {
+  bot.on("text", (message) => {
     const { message_id, from, chat } = message;
     const chat_id = chat.id;
     const bot_commands = get_entities({ message, type: "bot_command" });
@@ -484,10 +486,12 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
 
     let done = false;
     if (bot_commands.length > 0) {
-      done = task.some(t => t({ chat_id, message, message_id, bot_commands }));
+      done = task.some((t) =>
+        t({ chat_id, message, message_id, bot_commands }),
+      );
 
       if (!done && from.id == ownerID) {
-        done = admin_task.some(t =>
+        done = admin_task.some((t) =>
           t({ chat_id, message, message_id, bot_commands }),
         );
       }
@@ -497,7 +501,7 @@ const send_music = async ({ song_id, chat_id, message_id }) => {
       const url = get_entities({ message, type: "url" });
       if (url.length > 0) {
         let song_id;
-        url.some(u => {
+        url.some((u) => {
           const capture = /^https?:\/\/music\.163\.com(?:\/#)?(?:\/m)?\/song(?:\/|\?id=)(\d{5,15})/.exec(
             u,
           );
